@@ -3,6 +3,7 @@ import { generateCourseStructure, generateLessonContent, generateAssessment, Cou
 import { ZendeskClient, ZendeskArticle } from '@/lib/zendesk/client'
 import { Database } from '@/types/database'
 
+type Course = Database['public']['Tables']['courses']['Row']
 type CourseInsert = Database['public']['Tables']['courses']['Insert']
 type ModuleInsert = Database['public']['Tables']['modules']['Insert']
 type LessonInsert = Database['public']['Tables']['lessons']['Insert']
@@ -474,7 +475,7 @@ export class CourseGenerationService {
       return {
         success: true,
         articlesProcessed,
-        coursesAffected: affectedCourses?.map(c => c.id) || [],
+        coursesAffected: affectedCourses?.map((c: Course) => c.id) || [],
       }
     } catch (error) {
       console.error('Knowledge source sync failed:', error)

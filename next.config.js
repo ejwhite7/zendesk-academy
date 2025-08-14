@@ -34,6 +34,6 @@ const sentryWebpackPluginOptions = {
   automaticVercelMonitors: true,
 };
 
-module.exports = process.env.NODE_ENV === 'production' 
+module.exports = process.env.NODE_ENV === 'production' && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
   ? withSentryConfig(nextConfig, sentryWebpackPluginOptions)
   : nextConfig;

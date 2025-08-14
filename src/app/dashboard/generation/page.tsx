@@ -1,7 +1,10 @@
 import { CourseGenerationForm } from '@/components/dashboard/course-generation-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createServerClient } from '@/lib/supabase/server'
+import { Database } from '@/types/database'
 import { Zap, Clock, BookOpen, Target } from 'lucide-react'
+
+type KnowledgeSource = Database['public']['Tables']['knowledge_sources']['Row']
 
 export default async function GenerationPage() {
   const supabase = createServerClient()
@@ -131,7 +134,7 @@ export default async function GenerationPage() {
             <CardContent>
               {knowledgeSources && knowledgeSources.length > 0 ? (
                 <div className="space-y-3">
-                  {knowledgeSources.map((source) => (
+                  {knowledgeSources.map((source: KnowledgeSource) => (
                     <div key={source.id} className="flex items-center justify-between text-sm">
                       <div>
                         <p className="font-medium">{source.name}</p>

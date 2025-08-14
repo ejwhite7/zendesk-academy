@@ -1,8 +1,11 @@
 import { createServerClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Database } from '@/types/database'
 import { BookOpen, Users, TrendingUp, Clock, Plus, Zap } from 'lucide-react'
 import Link from 'next/link'
+
+type Course = Database['public']['Tables']['courses']['Row']
 
 export default async function DashboardPage() {
   const supabase = createServerClient()
@@ -124,7 +127,7 @@ export default async function DashboardPage() {
           <CardContent>
             {recentCourses && recentCourses.length > 0 ? (
               <div className="space-y-4">
-                {recentCourses.map((course) => (
+                {recentCourses.map((course: Course) => (
                   <div
                     key={course.id}
                     className="flex items-center justify-between p-3 border rounded-lg"

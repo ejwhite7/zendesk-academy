@@ -5,8 +5,11 @@ import { RecommendedCourses } from '@/components/learn/recommended-courses'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Database } from '@/types/database'
 import { Trophy, Clock, BookOpen, TrendingUp, Star } from 'lucide-react'
 import Link from 'next/link'
+
+type Enrollment = Database['public']['Tables']['enrollments']['Row']
 
 export default async function LearnPage() {
   const supabase = createServerClient()
@@ -59,9 +62,9 @@ export default async function LearnPage() {
       .limit(5),
   ])
 
-  const activeEnrollments = enrollments?.filter(e => e.status === 'active') || []
-  const completedCourses = enrollments?.filter(e => e.status === 'completed') || []
-  const totalLearningTime = enrollments?.reduce((total, e) => total + (e.time_spent_minutes || 0), 0) || 0
+  const activeEnrollments = enrollments?.filter((e: Enrollment) => e.status === 'active') || []
+  const completedCourses = enrollments?.filter((e: Enrollment) => e.status === 'completed') || []
+  const totalLearningTime = enrollments?.reduce((total: number, e: Enrollment) => total + (e.progress_percentage * 2 || 0), 0) || 0
 
   const stats = [
     {
